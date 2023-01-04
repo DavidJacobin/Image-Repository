@@ -1,8 +1,10 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const fileUpload = require("express-fileupload");
 
 const app = express();
 
+app.use(fileUpload());
 app.engine("hbs", exphbs.engine({ extname: '.hbs'}));
 app.set('view engine', 'hbs');
 
