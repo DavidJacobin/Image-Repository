@@ -6,11 +6,11 @@
 
 
 <div class="card">
-
+    {{#each rows}}
     <img class="card__image" src="/img/default.jpg" alt="User Profile">
-    <h1 class="card__title">User Profile</h1>
-    <div class="card__job"> Wannabe Developer</div>
-    <p class="card__about"> Hi, I'm David and I am a wannabe developer with no previous experience!</p>
+    <h1 class="card__title">{{this.name}}</h1>
+    <div class="card__job"> {{this.job}}</div>
+    <p class="card__about"> {{this.description}}</p>
     <button type="button" class="btn btn-primary"> View Profile</button>
-
+    {{/each}}
 </div>

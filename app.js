@@ -1,6 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const fileUpload = require("express-fileupload");
+const mysql = require('mysql');
 
 const app = express();
 
@@ -12,6 +13,42 @@ app.use(express.static('upload'));
 app.engine("hbs", exphbs.engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 
+
+
+const pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'user_profile'
+});
+
+pool.getConnection((err, connection) => {
+    if (err) throw err
+    console.log('connected');
+});
+
+
+
+
+app.get('/', (req, res) => {
+
+    pool.getConnection((err, connection) => {
+        if (err) throw err
+        console.log('connected');
+
+
+        connection.query('SELECT * FROM user WHERE id = "1"', (err, rows) => {
+
+            connection.release();
+            if(!err){
+                return res.render('home', { rows });
+            }
+
+        });
+    });
+
+});
 app.get('/', (req, res) => {
     res.render('home');
 });
