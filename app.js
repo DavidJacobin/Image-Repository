@@ -5,6 +5,10 @@ const fileUpload = require("express-fileupload");
 const app = express();
 
 app.use(fileUpload());
+
+app.use(express.static('public/'));
+app.use(express.static('upload'));
+
 app.engine("hbs", exphbs.engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 
