@@ -32,6 +32,7 @@ pool.getConnection((err, connection) => {
 
 
 app.get('/', (req, res) => {
+    
 
     pool.getConnection((err, connection) => {
         if (err) throw err
@@ -42,7 +43,7 @@ app.get('/', (req, res) => {
 
             connection.release();
             if(!err){
-                return res.render('home', { rows });
+                 res.render('home', { rows });
             }
 
         });
@@ -68,7 +69,23 @@ app.post('/', (req, res) => {
     sampleFile.mv(uploadPath, (err) => {
         if (err) return res.status(500).send(err);
 
-        res.send('File uploaded!')
+        
+        pool.getConnection((err, connection) => {
+            if (err) throw err
+            console.log('connected');
+    
+    
+            connection.query('UPDATE user SET profile_image = ? WHERE id="1"',[sampleFile.name], (err, rows) => {
+    
+                connection.release();
+                if(!err){
+                     res.redirect('/');
+                }
+    
+            });
+        });
+
+        
     })
 
 
